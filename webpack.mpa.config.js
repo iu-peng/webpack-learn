@@ -2,13 +2,31 @@ const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const glob = require("glob");
+
+function createChunksMpas() {
+  let entry = {};
+  let htmlPlugin = [];
+  const entryFiles = glob.sync(path.join(__dirname, "./src/*/index.js"));
+  entryFiles.forEach((item) => {
+    const match = item.match(/src\/(.*)\/index\.js/);
+    const entryFile = match[1];
+    entry[entryFile] = item;
+    htmlPlugin.push(
+      new htmlWebpackPlugin({
+        template: path.join(__dirname, `./src/${entryFile}/index.html`),
+        filename: `${entryFile}.html`,
+        chunks: [entryFile],
+      })
+    );
+  });
+  return { entry, htmlPlugin };
+}
+
+const { entry, htmlPlugin } = createChunksMpas();
 
 module.exports = {
-  entry: {
-    main: "./src/index.js",
-    fileB: "./src/demo.js",
-    fileC: ["./src/a.js", "./src/demo.js"],
-  },
+  entry,
   output: {
     path: path.resolve("./build"),
     filename: "[name]-[chunkhash:5].js",
@@ -74,16 +92,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new htmlWebpackPlugin({
-      template: "assets/index.html",
-      filename: "main.html",
-      chunks: ["main"],
-    }),
-    new htmlWebpackPlugin({
-      template: "assets/demo.html",
-      filename: "demo.html",
-      chunks: ["fileB"],
-    }),
+    ...htmlPlugin,
     new miniCssExtractPlugin({
       filename: "css/[name]-[contenthash:8].css",
     }),

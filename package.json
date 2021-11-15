@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack",
+    "server": "webpack-dev-server",
     "mpa": "webpack --config ./webpack.mpa.config.js"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^5.2.7",
     "cssnano": "^5.0.10",
+    "express": "^4.17.1",
     "file-loader": "^6.2.0",
     "glob": "^7.2.0",
     "html-webpack-plugin": "^4.5.2",
@@ -27,6 +29,10 @@
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
     "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.3"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
   }
 }

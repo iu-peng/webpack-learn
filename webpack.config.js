@@ -2,6 +2,7 @@ const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const addTxtPlugin = require("./plugins/add-txt-plugin");
 const glob = require("glob");
 
 function createChunksMpas() {
@@ -26,7 +27,8 @@ function createChunksMpas() {
 const { entry, htmlPlugin } = createChunksMpas();
 
 module.exports = {
-  entry,
+  // entry,
+  entry: "./src/index.js",
   output: {
     path: path.resolve("./build"),
     filename: "[name]-[chunkhash:5].js",
@@ -90,10 +92,21 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.js$/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
     ],
   },
   plugins: [
-    ...htmlPlugin,
+    // ...htmlPlugin,
+    new addTxtPlugin(),
+    new htmlWebpackPlugin({
+      template: "./assets/buildIndex.html",
+      filename: `index.html`,
+    }),
     new miniCssExtractPlugin({
       filename: "css/[name]-[contenthash:8].css",
     }),

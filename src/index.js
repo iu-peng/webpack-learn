@@ -1,5 +1,9 @@
-// import { a } from "./a";
-import css from "./index.css";
-import csss from "./index.less";
-// console.log(a);
-// console.log("这是index.js");
+import React, { useState } from "react";
+import ReactDom from "react-dom";
+
+const APP = () => {
+  const [a] = useState("信息");
+  return <div>这是react {a}</div>;
+};
+
+ReactDom.render(<APP />, document.getElementById("app"));

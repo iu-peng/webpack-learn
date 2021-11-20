@@ -21,6 +21,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^5.2.7",
     "cssnano": "^5.0.10",
+    "doubanbook": "^1.0.1",
     "express": "^4.17.1",
     "file-loader": "^6.2.0",
     "glob": "^7.2.0",
